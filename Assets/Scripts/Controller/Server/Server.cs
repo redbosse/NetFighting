@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Model;
-using UnityEngine;
 
-namespace Controller
+namespace Controller.Server
 {
     public class Server : IServer
     {
         private List<Client> _clients = new List<Client>();
+        
         
         public string Connected(Client client)
         {
@@ -15,7 +15,7 @@ namespace Controller
 
             if (isContains)
             {
-                return "";
+                return string.Empty;
             }
 
             _clients.Add(client);
@@ -24,6 +24,18 @@ namespace Controller
             client.OnDisconnectEventHandler += Disconnect;
             
             return $"23asdpiuyansda; + {client.Name}";
+        }
+
+        
+        public void OnRPCCommand(string cmd, string _token)
+        {
+            foreach (var client in _clients)
+            {
+                if (client.CheckToken(_token))
+                {
+                   client.InvokeRpcFromServer(cmd);
+                }
+            }
         }
 
         public void StartServer()

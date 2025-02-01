@@ -1,12 +1,13 @@
 ﻿using System;
 using Model;
 
-namespace Controller
+namespace Controller.Server
 {
     public interface IServer : IDisposable
     {
-        public string Connected(Client client);
+        public string Connected(Model.Client client);
 
+        public void OnRPCCommand(string cmd, string _token);
         public void StartServer();
         public void StopServer();
     }

@@ -1,10 +1,11 @@
 ﻿using Model;
 
-namespace Controller
+namespace Controller.ClientNetWork
 {
     public interface IGameNetwork
     {
         public string Connect(string adress, string name, Client client);
         public bool IsConnected(string token);
+        public void InvokeRPC(string methodName, IClient client);
     }
 }

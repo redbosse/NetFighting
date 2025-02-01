@@ -1,5 +1,7 @@
 ﻿
 using Controller;
+using Controller.Server;
+using Controller.ClientNetWork;
 using Model;
 
 using Zenject;
@@ -11,7 +13,7 @@ namespace ZenjectInstallers
       
         public override void InstallBindings()
         {
-            Container.Bind<IServer>().To<Server>().AsSingle();
+           
             
             Container.Bind<IGameNetwork>().To<GameNetwork>().AsSingle();
             

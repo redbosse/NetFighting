@@ -1,6 +1,5 @@
 ﻿using System;
-using Controller;
-using Zenject;
+
 
 
 namespace Model
@@ -11,7 +10,12 @@ namespace Model
         public void StartClient(string name);
         public void OnConnect();
 
-        public void SetNetworkInstance(IGameNetwork networkInstance);
+        public bool CheckToken(string token);
+        
+        public string GetToken();
+        public void SubscribeToRPC(IRpcMethod rpcMethod);
+        public void UnSubscribeToRPC(IRpcMethod rpcMethod);
+    
         public void OnDisconnect();
         
     }

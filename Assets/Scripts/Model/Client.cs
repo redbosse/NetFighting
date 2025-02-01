@@ -1,16 +1,20 @@
 ﻿using System;
-using Controller;
-using UnityEngine;
+using System.Collections.Generic;
+using Controller.ClientNetWork;
+using Controller.Server;
+using NUnit.Framework;
+using Unity.Collections.LowLevel.Unsafe;
 using Zenject;
-using Random = UnityEngine.Random;
+
 
 namespace Model
 {
-    
-    public class Client : IClient
+    public class Client : IClient, IServerRPC
     {
         private string _token;
-
+        
+        List<IRpcMethod> _rpcMethods = new List<IRpcMethod>();
+        
         public string Name { get; set; }
 
         public event Action<Client> OnDisconnectEventHandler;
@@ -32,17 +36,38 @@ namespace Model
            OnConnect();
            
         }
-
-      
-
+        
         public void OnConnect()
         {
             
         }
 
-        public void SetNetworkInstance(IGameNetwork networkInstance)
+        public bool CheckToken(string token)
         {
-            _network = networkInstance;
+           return _token == token;
+        }
+
+        public string GetToken()
+        {
+            return _token;
+        }
+        
+        public void SubscribeToRPC(IRpcMethod rpcMethod)
+        {
+            _rpcMethods.Add(rpcMethod);
+        }
+
+        public void UnSubscribeToRPC(IRpcMethod rpcMethod)
+        {
+            _rpcMethods.Remove(rpcMethod);
+        }
+
+        public void InvokeRpcFromServer(string cmd)
+        {
+            foreach (var method in _rpcMethods)
+            {
+                method.RPCMethod(cmd);
+            }
         }
 
         public void OnDisconnect()
@@ -55,7 +80,6 @@ namespace Model
         {
             
         }
-
-       
+        
     }
 }

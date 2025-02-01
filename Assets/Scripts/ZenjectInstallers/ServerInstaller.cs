@@ -1,4 +1,5 @@
 ﻿using Controller;
+using Controller.Server;
 using Model;
 using Zenject;
 
@@ -8,7 +9,7 @@ namespace ZenjectInstallers
     {
         public override void InstallBindings()
         {
-            
+            Container.Bind<IServer>().To<Server>().AsSingle();
             
         }
     }
