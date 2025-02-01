@@ -1,13 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Controller.ClientNetWork;
 using Model;
+using Zenject;
 
 namespace Controller.Server
 {
     public class Server : IServer
     {
         private List<Client> _clients = new List<Client>();
-        
+
+        [Inject] 
+        private IGameNetwork _network;
         
         public string Connected(Client client)
         {
@@ -35,6 +39,30 @@ namespace Controller.Server
                 {
                    client.InvokeRpcFromServer(cmd);
                 }
+            }
+        }
+
+        public void OnRPCCommandToServer(string cmd, string _token)
+        {
+           
+        }
+
+        public void OnRPCCommandClientToClient(string cmd, string _token)
+        {
+            foreach (var client in _clients)
+            {
+                if (!client.CheckToken(_token))
+                {
+                    client.InvokeRpcFromServer(cmd);
+                }
+            }
+        }
+
+        public void OnRPCCommandServerToClient(string cmd)
+        {
+            foreach (var client in _clients)
+            {
+                client.InvokeRpcFromServer(cmd);
             }
         }
 
@@ -66,6 +94,11 @@ namespace Controller.Server
         public void Dispose()
         {
             StopServer();
+        }
+
+        public void Initialize()
+        {
+            _network.InvokeRPC("OnStartGame",RpcType.ServerToClient);
         }
     }
 }

@@ -15,9 +15,51 @@ namespace Controller.ClientNetWork
             return _server.Connected(client);
         }
 
-        public void InvokeRPC(string methodName, IClient client)
+        public void InvokeRPC(string methodName, IClient client, RpcType type)
         {
-            _server.OnRPCCommand(methodName, client.GetToken());
+           
+            switch (type)
+            {
+                case RpcType.ClientToServer:
+                    
+                    _server.OnRPCCommandToServer(methodName, client.GetToken());
+                    
+                    break;
+                
+                case RpcType.ServerToClient:
+                    
+                    _server.OnRPCCommandServerToClient(methodName);
+                    
+                    break;
+                
+                case RpcType.myself:
+                    
+                    _server.OnRPCCommand(methodName, client.GetToken());
+                    
+                    break;
+                
+                case RpcType.ClientToClient:
+                    
+                    _server.OnRPCCommandClientToClient(methodName, client.GetToken());
+                    
+                    break;
+                
+            }
+            
+        }
+
+        public void InvokeRPC(string methodName, RpcType type)
+        {
+           
+
+            switch (type)
+            {
+                case RpcType.ServerToClient:
+                    
+                    _server.OnRPCCommandServerToClient(methodName);
+                    
+                    break;
+            }
         }
 
         public bool IsConnected(string token)

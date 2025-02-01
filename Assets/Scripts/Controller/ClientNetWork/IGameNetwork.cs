@@ -6,6 +6,8 @@ namespace Controller.ClientNetWork
     {
         public string Connect(string adress, string name, Client client);
         public bool IsConnected(string token);
-        public void InvokeRPC(string methodName, IClient client);
+        public void InvokeRPC(string methodName, IClient client ,RpcType type);
+        public void InvokeRPC(string methodName, RpcType type);
+       
     }
 }
