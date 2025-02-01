@@ -5,7 +5,8 @@ namespace Controller.Hp
 {
     public class HpController
     {
-        private int _hp;
+        [SerializeField]
+        private int _hp = 100;
 
         public event Action onDeathEvent;
         public event  Action<int> onHpChanged;
@@ -29,16 +30,16 @@ namespace Controller.Hp
 
             onHpChanged?.Invoke(Mathf.Clamp(_hp,0,100));
             
-            if (_hp == 0)
+            if (_hp <= 0)
             {
                 onDeathEvent?.Invoke();  
                 
             }
         }
         
-        public void Heal(int damage)
+        public void Heal(int heal)
         {
-            _hp += Mathf.Abs(damage);
+            _hp += Mathf.Abs(heal);
 
             onHpChanged?.Invoke(Mathf.Clamp(_hp,0,100));
             

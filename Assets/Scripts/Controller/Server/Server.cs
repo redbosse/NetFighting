@@ -2,6 +2,7 @@
 using System.Linq;
 using Controller.ClientNetWork;
 using Model;
+using UnityEngine;
 using Zenject;
 
 namespace Controller.Server
@@ -66,6 +67,14 @@ namespace Controller.Server
             foreach (var client in _clients)
             {
                 client.InvokeRpcFromServer(cmd);
+            }
+        }
+
+        public void OnRPCCommandAnonymus(string cmd)
+        {
+            if (cmd == "OnRestartGame")//TO DO: передачу таргет имён можно реализовать куда изящнее, но это больше кода.
+            {
+                RestartGame();
             }
         }
 

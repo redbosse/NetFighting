@@ -12,6 +12,7 @@ namespace Controller.Server
         public void OnRPCCommandToServer(string cmd, string _token);
         public void OnRPCCommandClientToClient(string cmd, string _token);
         public void OnRPCCommandServerToClient(string cmd);
+        public void OnRPCCommandAnonymus(string cmd);
         public void StartServer();
         public void StopServer();
     }

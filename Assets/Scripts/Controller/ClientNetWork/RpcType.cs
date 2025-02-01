@@ -5,6 +5,7 @@
         myself,
         ClientToServer,
         ClientToClient,
-        ServerToClient
+        ServerToClient,
+        AnonimysToServer
     }
 }

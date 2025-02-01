@@ -1,5 +1,6 @@
 ﻿using Controller.Server;
 using Model;
+using UnityEngine;
 using Zenject;
 
 namespace Controller.ClientNetWork
@@ -51,14 +52,22 @@ namespace Controller.ClientNetWork
         public void InvokeRPC(string methodName, RpcType type)
         {
             
+            
             switch (type)
             {
                 case RpcType.ServerToClient:
                     
                     _server.OnRPCCommandServerToClient(methodName);
                     
+                    break; 
+                case RpcType.AnonimysToServer:
+                    
+                    _server.OnRPCCommandAnonymus(methodName);
+                    
                     break;
             }
+            
+            
         }
 
         public bool IsConnected(string token)

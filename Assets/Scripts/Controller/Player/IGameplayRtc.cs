@@ -1,4 +1,4 @@
-﻿namespace Player
+﻿namespace Controller.Player
 {
     public interface IGameplayRtc
     {
