@@ -44,7 +44,10 @@ namespace Controller.Server
 
         public void OnRPCCommandToServer(string cmd, string _token)
         {
-           
+            if ("OnRestartGame" == cmd)
+            {
+                RestartGame();
+            }
         }
 
         public void OnRPCCommandClientToClient(string cmd, string _token)
@@ -95,10 +98,14 @@ namespace Controller.Server
         {
             StopServer();
         }
+        
+        void StartGame() => _network.InvokeRPC("OnStartGame",RpcType.ServerToClient);
 
         public void Initialize()
         {
-            _network.InvokeRPC("OnStartGame",RpcType.ServerToClient);
+            StartGame();
         }
+        
+        void RestartGame() => _network.InvokeRPC("OnRestartGame", RpcType.ServerToClient);
     }
 }

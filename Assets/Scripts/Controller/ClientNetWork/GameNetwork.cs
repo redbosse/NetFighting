@@ -50,8 +50,7 @@ namespace Controller.ClientNetWork
 
         public void InvokeRPC(string methodName, RpcType type)
         {
-           
-
+            
             switch (type)
             {
                 case RpcType.ServerToClient:
